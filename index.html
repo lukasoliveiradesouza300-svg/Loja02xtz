@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01 XIZITHX | Loja Oficial</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root { --primary: #000; --gray: #f4f4f4; --red: #e60000; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { background: #fff; color: var(--primary); }
+
+        /* HEADER & CONTADOR */
+        header { padding: 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #eee; position: sticky; top: 0; background: #fff; z-index: 100; }
+        .logo { font-size: 22px; font-weight: 900; letter-spacing: -1px; }
+        .user-icons { display: flex; gap: 15px; align-items: center; }
+        #cart-counter { position: absolute; top: -10px; right: -10px; background: var(--red); color: #fff; border-radius: 50%; padding: 2px 6px; font-size: 10px; font-weight: bold; }
+
+        /* BUSCA (Estilo Secret Outlet) */
+        .search-container { padding: 10px 15px; }
+        .search-box { background: var(--gray); padding: 12px; border-radius: 5px; display: flex; align-items: center; gap: 10px; }
+        .search-box input { border: none; background: none; outline: none; width: 100%; font-size: 14px; }
+
+        /* CATEGORIAS */
+        .category-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; padding: 10px; }
+        .cat-card { background: #000; color: #fff; padding: 15px; text-align: center; font-size: 12px; font-weight: bold; text-transform: uppercase; }
+
+        /* PRODUTOS */
+        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px; }
+        .product-card { position: relative; }
+        .product-image-wrapper { position: relative; width: 100%; border-radius: 4px; overflow: hidden; }
+        .product-image-wrapper img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+        .tag-off { position: absolute; top: 8px; right: 8px; background: #000; color: #fff; padding: 2px 6px; font-size: 10px; font-weight: bold; }
+        .tag-frete { position: absolute; top: 8px; left: 8px; background: #fff; border: 1px solid #000; padding: 2px 4px; font-size: 8px; font-weight: bold; text-transform: uppercase; }
+        
+        .p-info { padding: 8px 0; }
+        .p-name { font-size: 12px; color: #555; margin: 4px 0; }
+        .p-price { font-size: 16px; font-weight: bold; display: block; }
+        .p-pix { color: #27ae60; font-size: 12px; font-weight: bold; }
+        .buy-btn { width: 100%; border: 1px solid #000; background: #fff; padding: 10px; font-size: 11px; font-weight: bold; text-transform: uppercase; cursor: pointer; margin-top: 8px; }
+
+        /* MENU LATERAL */
+        #mobile-menu { position: fixed; top: 0; left: -100%; width: 80%; height: 100%; background: #fff; z-index: 1000; transition: 0.4s; padding: 20px; box-shadow: 5px 0 15px rgba(0,0,0,0.1); }
+        #mobile-menu.active { left: 0; }
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 999; }
+        #overlay.active { display: block; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div onclick="toggleMenu()"><i data-lucide="menu"></i></div>
+        <div class="logo">XIZITHX</div>
+        <div class="user-icons">
+            <i data-lucide="user"></i>
+            <div onclick="sendWhatsApp()" style="position: relative; cursor: pointer;">
+                <i data-lucide="shopping-cart"></i>
+                <span id="cart-counter">0</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="search-container">
+        <div class="search-box">
+            <i data-lucide="search" size="18"></i>
+            <input type="text" placeholder="Olá, o que você procura?">
+        </div>
+    </div>
+
+    <div style="width: 100%; height: 180px; background: #eee url('camisa-colorida-street.jpg') center/cover; display: flex; align-items: flex-end; padding: 20px;">
+        <h2 style="color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.6);">CAMISAS 2026</h2>
+    </div>
+
+    <div class="category-grid">
+        <div class="cat-card">Camisetas</div>
+        <div class="cat-card">Bermudas</div>
+    </div>
+
+    <main class="products-grid">
+        <div class="product-card">
+            <div class="product-image-wrapper">
+                <div class="tag-frete">Frete Grátis</div>
+                <div class="tag-off">-32%</div>
+                <img src="blusao-preto-street.jpg">
+            </div>
+            <div class="p-info">
+                <strong>01 XIZITHX</strong>
+                <p class="p-name">Blusão Street Preto Heavy</p>
+                <span class="p-price">R$ 150,00</span>
+                <span class="p-pix">R$ 135,00 no PIX</span>
+                <button class="buy-btn" onclick="add('Blusão Preto', 150)">Adicionar</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image-wrapper">
+                <div class="tag-frete">Frete Grátis</div>
+                <div class="tag-off">-22%</div>
+                <img src="blusao-branco-street.jpg">
+            </div>
+            <div class="p-info">
+                <strong>01 XIZITHX</strong>
+                <p class="p-name">Blusão Minimalist White</p>
+                <span class="p-price">R$ 150,00</span>
+                <span class="p-pix">R$ 135,00 no PIX</span>
+                <button class="buy-btn" onclick="add('Blusão Branco', 150)">Adicionar</button>
+            </div>
+        </div>
+    </main>
+
+    <div id="overlay" onclick="toggleMenu()"></div>
+    <div id="mobile-menu">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <h3 style="letter-spacing: 1px;">MENU</h3>
+            <div onclick="toggleMenu()"><i data-lucide="x"></i></div>
+        </div>
+        <p style="padding: 15px 0; border-bottom: 1px solid #eee; font-weight: bold;">ROUPAS</p>
+        <p style="padding: 15px 0; border-bottom: 1px solid #eee; font-weight: bold; color: var(--red);">SALDOS 50% OFF</p>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleMenu() {
+            document.getElementById('mobile-menu').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        let cart = [];
+
+        function add(n, p) {
+            cart.push({ nome: n, preco: p });
+            // Atualiza o número no círculo vermelho
+            document.getElementById('cart-counter').innerText = cart.length;
+            alert(n + " foi adicionado!");
+        }
+
+        function sendWhatsApp() {
+            if (cart.length === 0) {
+                alert("Seu carrinho está vazio!");
+                return;
+            }
+            let texto = "Salve! Quero finalizar o pedido:\n\n";
+            cart.forEach((item, index) => {
+                texto += (index + 1) + ". " + item.nome + " - R$ " + item.preco + "\n";
+            });
+            window.open("https://wa.me/55493452947?text=" + encodeURIComponent(texto));
+        }
+    </script>
+</body>
+</html>
